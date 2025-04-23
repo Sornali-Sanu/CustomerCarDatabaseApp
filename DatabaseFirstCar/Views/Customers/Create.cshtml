@@ -1,0 +1,96 @@
+﻿@model DatabaseFirstCar.Models.ViewModel.CustomerViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+   
+
+    <div class="row">
+       
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">New Customer Info</h4>
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                    <div class="mb-3">
+                        @Html.LabelFor(x => x.FirstName, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(x => x.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(x => x.LastName, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(x => x.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(x => x.MobileNo, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(x => x.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.MobileNo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(x => x.DateOfBirth, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(x => x.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.DateOfBirth, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(x => x.Price, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(x => x.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(x => x.Price, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        @Html.CheckBoxFor(x => x.IsRegular, new { @class = "form-check-input" })
+                        @Html.LabelFor(x => x.IsRegular, htmlAttributes: new { @class = "form-check-label" })
+                        @Html.ValidationMessageFor(x => x.IsRegular, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Upload Image</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="~/images/noimage.png" alt="default" id="ImgFile" width="70" height="70" class="rounded border" />
+                            <div>
+                                <input onchange="readURL(this)" id="upimage" class="d-none" type="file" name="PicturePath" />
+                                <label for="upimage" class="btn btn-outline-primary btn-sm">Choose Image</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <a href="@Url.Action("Index","Customers")" class="btn btn-secondary">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Choose Model</h4>
+
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="#" id="btnPlus" class="btn btn-warning">Add</a>
+                    </div>
+
+                    <div id="QualificationContainer">
+                        @Html.Action("AddNewModel", "Customers")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="d-flex justify-content-end">
+        <input type="submit" value="Create" class="btn btn-primary px-4" />
+    </div>
+}

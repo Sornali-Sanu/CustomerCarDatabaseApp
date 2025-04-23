@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CustomerCarDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="IsRegular" Type="Boolean" Nullable="false" />
+    <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Links" Relationship="Self.FK__Link__CustomerId__534D60F1" FromRole="Customer" ToRole="Link" />
+  </EntityType>
+  <EntityType Name="Link">
+    <Key>
+      <PropertyRef Name="LinkId" />
+    </Key>
+    <Property Name="LinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="ModelId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Link__CustomerId__534D60F1" FromRole="Link" ToRole="Customer" />
+    <NavigationProperty Name="Model" Relationship="Self.FK__Link__ModelId__5441852A" FromRole="Link" ToRole="Model" />
+  </EntityType>
+  <EntityType Name="Model">
+    <Key>
+      <PropertyRef Name="ModelId" />
+    </Key>
+    <Property Name="ModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Model1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Links" Relationship="Self.FK__Link__ModelId__5441852A" FromRole="Model" ToRole="Link" />
+  </EntityType>
+  <Association Name="FK__Link__CustomerId__534D60F1">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Link" Type="Self.Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Link">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Link__ModelId__5441852A">
+    <End Role="Model" Type="Self.Model" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Link" Type="Self.Link" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Model">
+        <PropertyRef Name="ModelId" />
+      </Principal>
+      <Dependent Role="Link">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CustomerCarDBEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Links" EntityType="Self.Link" />
+    <EntitySet Name="Models" EntityType="Self.Model" />
+    <AssociationSet Name="FK__Link__CustomerId__534D60F1" Association="Self.FK__Link__CustomerId__534D60F1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Link" EntitySet="Links" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Link__ModelId__5441852A" Association="Self.FK__Link__ModelId__5441852A">
+      <End Role="Model" EntitySet="Models" />
+      <End Role="Link" EntitySet="Links" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
